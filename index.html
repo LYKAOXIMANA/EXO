@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EXO Member Profile</title>
+    <title>EXO Members - Profile</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -14,7 +14,7 @@
         }
         
         body {
-            background: linear-gradient(135deg, #0c0c0c 0%, #2a2a72 100%);
+            background: linear-gradient(135deg, #0c0c0c 0%, #1a1a4a 100%);
             color: #fff;
             min-height: 100vh;
             padding: 20px;
@@ -32,17 +32,50 @@
         }
         
         .logo {
-            font-size: 2.5rem;
+            font-size: 3rem;
             font-weight: 800;
             letter-spacing: 5px;
             color: #ffffff;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            text-shadow: 0 0 15px rgba(100, 100, 255, 0.7);
             margin-bottom: 10px;
         }
         
         .subtitle {
             color: #a5b0c4;
             font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+        
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .tab {
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .tab.active {
+            background: linear-gradient(45deg, #3a1c71, #d76d77);
+            box-shadow: 0 0 15px rgba(215, 109, 119, 0.5);
+        }
+        
+        .tab:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .members-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
         }
         
         .member-card {
@@ -50,127 +83,73 @@
             backdrop-filter: blur(10px);
             border-radius: 15px;
             overflow: hidden;
-            max-width: 900px;
-            margin: 0 auto;
-            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.5);
-            display: flex;
-            flex-direction: column;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         
-        @media (min-width: 768px) {
-            .member-card {
-                flex-direction: row;
-            }
+        .member-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.4);
         }
         
         .member-image {
-            flex: 1;
-            position: relative;
-            min-height: 300px;
+            height: 250px;
             background: linear-gradient(45deg, #3a1c71, #d76d77, #ffaf7b);
+            position: relative;
         }
         
         .member-info {
-            flex: 1;
-            padding: 30px;
+            padding: 20px;
         }
         
         .stage-name {
-            font-size: 2.5rem;
+            font-size: 1.5rem;
             margin-bottom: 5px;
             color: #ffffff;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
         }
         
         .real-name {
-            font-size: 1.2rem;
+            font-size: 1rem;
             color: #b8b8b8;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
         
-        .info-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 25px;
-        }
-        
-        .info-item {
-            background: rgba(255, 255, 255, 0.08);
-            padding: 12px;
-            border-radius: 8px;
-        }
-        
-        .info-label {
+        .position {
+            display: inline-block;
+            padding: 5px 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
             font-size: 0.8rem;
-            color: #a5b0c4;
-            margin-bottom: 5px;
+            margin-bottom: 15px;
         }
         
-        .info-value {
-            font-size: 1.1rem;
-            font-weight: 500;
-        }
-        
-        .bio {
-            line-height: 1.6;
-            margin-bottom: 25px;
+        .details {
+            font-size: 0.9rem;
             color: #e0e0e0;
+            margin-bottom: 10px;
         }
         
         .social-links {
             display: flex;
-            gap: 15px;
-            margin-top: 20px;
+            gap: 10px;
+            margin-top: 15px;
         }
         
         .social-link {
-            width: 40px;
-            height: 40px;
+            width: 30px;
+            height: 30px;
             border-radius: 50%;
             background: rgba(255, 255, 255, 0.1);
             display: flex;
             align-items: center;
             justify-content: center;
             transition: all 0.3s ease;
+            font-size: 0.9rem;
         }
         
         .social-link:hover {
             background: linear-gradient(45deg, #3a1c71, #d76d77);
             transform: translateY(-3px);
-        }
-        
-        .discography {
-            margin-top: 40px;
-        }
-        
-        .albums {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
-        
-        .album {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
-            overflow: hidden;
-            transition: transform 0.3s ease;
-        }
-        
-        .album:hover {
-            transform: translateY(-5px);
-        }
-        
-        .album-cover {
-            height: 150px;
-            background: linear-gradient(45deg, #3a1c71, #d76d77, #ffaf7b);
-        }
-        
-        .album-title {
-            padding: 10px;
-            font-size: 0.9rem;
-            text-align: center;
         }
         
         footer {
@@ -180,81 +159,225 @@
             color: #a5b0c4;
             font-size: 0.9rem;
         }
+        
+        .active-unit {
+            display: block;
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: #d76d77;
+        }
+        
+        @media (max-width: 768px) {
+            .members-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+            
+            .member-image {
+                height: 200px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .members-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .logo {
+                font-size: 2.5rem;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
             <div class="logo">EXO</div>
-            <div class="subtitle">K-POP SUPERGROUP</div>
+            <div class="subtitle">K-POP SUPERGROUP | 엑소</div>
+            
+            <div class="tabs">
+                <div class="tab active">All Members</div>
+                <div class="tab">EXO-K</div>
+                <div class="tab">EXO-M</div>
+                <div class="tab">Vocal Line</div>
+                <div class="tab">Dance Line</div>
+            </div>
         </header>
         
-        <div class="member-card">
-            <div class="member-image">
-                <!-- Image would go here, using gradient as placeholder -->
+        <div class="members-grid">
+            <!-- Member 1 -->
+            <div class="member-card">
+                <div class="member-image"></div>
+                <div class="member-info">
+                    <h3 class="stage-name">SUHO</h3>
+                    <div class="real-name">Kim Jun-myeon (김준면)</div>
+                    <span class="position">Leader • Vocalist</span>
+                    <div class="details">Born: May 22, 1991</div>
+                    <div class="details">Nationality: South Korean</div>
+                    <span class="active-unit">EXO-K • EXO</span>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
             </div>
             
-            <div class="member-info">
-                <h1 class="stage-name">KAI</h1>
-                <div class="real-name">Kim Jong-in (김종인)</div>
-                
-                <div class="info-grid">
-                    <div class="info-item">
-                        <div class="info-label">POSITION</div>
-                        <div class="info-value">Main Dancer</div>
+            <!-- Member 2 -->
+            <div class="member-card">
+                <div class="member-image"></div>
+                <div class="member-info">
+                    <h3 class="stage-name">BAEKHYUN</h3>
+                    <div class="real-name">Byun Baek-hyun (변백현)</div>
+                    <span class="position">Main Vocalist</span>
+                    <div class="details">Born: May 6, 1992</div>
+                    <div class="details">Nationality: South Korean</div>
+                    <span class="active-unit">EXO-K • EXO • SuperM</span>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
                     </div>
-                    <div class="info-item">
-                        <div class="info-label">BIRTHDAY</div>
-                        <div class="info-value">January 14, 1994</div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-label">NATIONALITY</div>
-                        <div class="info-value">South Korean</div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-label">SUB-UNIT</div>
-                        <div class="info-value">EXO-K, SuperM</div>
-                    </div>
-                </div>
-                
-                <p class="bio">
-                    Kim Jong-in, known professionally as Kai, is a South Korean singer, model, and dancer. He is a member of the South Korean-Chinese boy group EXO and its sub-unit EXO-K, in addition to being a member of the project group SuperM. He is recognized for his dancing skills and stage presence.
-                </p>
-                
-                <div class="social-links">
-                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
-                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-                    <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
-                    <a href="#" class="social-link"><i class="fab fa-tiktok"></i></a>
                 </div>
             </div>
-        </div>
-        
-        <div class="discography">
-            <h2>Featured Albums</h2>
-            <div class="albums">
-                <div class="album">
-                    <div class="album-cover"></div>
-                    <div class="album-title">Don't Fight the Feeling</div>
+            
+            <!-- Member 3 -->
+            <div class="member-card">
+                <div class="member-image"></div>
+                <div class="member-info">
+                    <h3 class="stage-name">CHANYEOL</h3>
+                    <div class="real-name">Park Chan-yeol (박찬열)</div>
+                    <span class="position">Main Rapper • Vocalist</span>
+                    <div class="details">Born: November 27, 1992</div>
+                    <div class="details">Nationality: South Korean</div>
+                    <span class="active-unit">EXO-K • EXO</span>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                    </div>
                 </div>
-                <div class="album">
-                    <div class="album-cover"></div>
-                    <div class="album-title">Obsession</div>
+            </div>
+            
+            <!-- Member 4 -->
+            <div class="member-card">
+                <div class="member-image"></div>
+                <div class="member-info">
+                    <h3 class="stage-name">D.O.</h3>
+                    <div class="real-name">Do Kyung-soo (도경수)</div>
+                    <span class="position">Main Vocalist</span>
+                    <div class="details">Born: January 12, 1993</div>
+                    <div class="details">Nationality: South Korean</div>
+                    <span class="active-unit">EXO-K • EXO</span>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    </div>
                 </div>
-                <div class="album">
-                    <div class="album-cover"></div>
-                    <div class="album-title">Love Shot</div>
+            </div>
+            
+            <!-- Member 5 -->
+            <div class="member-card">
+                <div class="member-image"></div>
+                <div class="member-info">
+                    <h3 class="stage-name">KAI</h3>
+                    <div class="real-name">Kim Jong-in (김종인)</div>
+                    <span class="position">Main Dancer • Vocalist</span>
+                    <div class="details">Born: January 14, 1994</div>
+                    <div class="details">Nationality: South Korean</div>
+                    <span class="active-unit">EXO-K • EXO • SuperM</span>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-tiktok"></i></a>
+                    </div>
                 </div>
-                <div class="album">
-                    <div class="album-cover"></div>
-                    <div class="album-title">KAI (First Solo)</div>
+            </div>
+            
+            <!-- Member 6 -->
+            <div class="member-card">
+                <div class="member-image"></div>
+                <div class="member-info">
+                    <h3 class="stage-name">SEHUN</h3>
+                    <div class="real-name">Oh Se-hun (오세훈)</div>
+                    <span class="position">Lead Dancer • Rapper • Maknae</span>
+                    <div class="details">Born: April 12, 1994</div>
+                    <div class="details">Nationality: South Korean</div>
+                    <span class="active-unit">EXO-K • EXO</span>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-weibo"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Member 7 -->
+            <div class="member-card">
+                <div class="member-image"></div>
+                <div class="member-info">
+                    <h3 class="stage-name">XIUMIN</h3>
+                    <div class="real-name">Kim Min-seok (김민석)</div>
+                    <span class="position">Lead Vocalist • Dancer</span>
+                    <div class="details">Born: March 26, 1990</div>
+                    <div class="details">Nationality: South Korean</div>
+                    <span class="active-unit">EXO-M • EXO</span>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-weibo"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Member 8 -->
+            <div class="member-card">
+                <div class="member-image"></div>
+                <div class="member-info">
+                    <h3 class="stage-name">LAY</h3>
+                    <div class="real-name">Zhang Yixing (张艺兴)</div>
+                    <span class="position">Main Dancer • Vocalist</span>
+                    <div class="details">Born: October 7, 1991</div>
+                    <div class="details">Nationality: Chinese</div>
+                    <span class="active-unit">EXO-M • EXO</span>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-weibo"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Member 9 -->
+            <div class="member-card">
+                <div class="member-image"></div>
+                <div class="member-info">
+                    <h3 class="stage-name">CHEN</h3>
+                    <div class="real-name">Kim Jong-dae (김종대)</div>
+                    <span class="position">Main Vocalist</span>
+                    <div class="details">Born: September 21, 1992</div>
+                    <div class="details">Nationality: South Korean</div>
+                    <span class="active-unit">EXO-M • EXO</span>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    </div>
                 </div>
             </div>
         </div>
         
         <footer>
-            <p>EXO Member Profile © 2023 | SM Entertainment</p>
+            <p>EXO Members Profile © 2023 | SM Entertainment</p>
         </footer>
     </div>
+
+    <script>
+        // Simple tab functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('.tab');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // In a real application, this would filter the members
+                    // For this example, we'll just show a message
+                    const unitName = this.textContent;
+                    alert(`Showing ${unitName} members!`);
+                });
+            });
+        });
+    </script>
 </body>
 </html>
