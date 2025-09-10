@@ -169,6 +169,14 @@
             color: #d76d77;
         }
         
+        .no-results {
+            text-align: center;
+            grid-column: 1 / -1;
+            padding: 40px;
+            font-size: 1.2rem;
+            color: #a5b0c4;
+        }
+        
         @media (max-width: 768px) {
             .members-grid {
                 grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -197,17 +205,17 @@
             <div class="subtitle">K-POP SUPERGROUP | 엑소</div>
             
             <div class="tabs">
-                <div class="tab active">All Members</div>
-                <div class="tab">EXO-K</div>
-                <div class="tab">EXO-M</div>
-                <div class="tab">Vocal Line</div>
-                <div class="tab">Dance Line</div>
+                <div class="tab active" data-filter="all">All Members</div>
+                <div class="tab" data-filter="exo-k">EXO-K</div>
+                <div class="tab" data-filter="exo-m">EXO-M</div>
+                <div class="tab" data-filter="vocal">Vocal Line</div>
+                <div class="tab" data-filter="dance">Dance Line</div>
             </div>
         </header>
         
         <div class="members-grid">
             <!-- Member 1: SUHO -->
-            <div class="member-card">
+            <div class="member-card" data-groups='["exo-k", "vocal"]'>
                 <div class="member-image" style="background-image: url('https://placehold.co/300x400/2a2a72/FFFFFF?text=SUHO')"></div>
                 <div class="member-info">
                     <h3 class="stage-name">SUHO</h3>
@@ -224,7 +232,7 @@
             </div>
             
             <!-- Member 2: BAEKHYUN -->
-            <div class="member-card">
+            <div class="member-card" data-groups='["exo-k", "vocal"]'>
                 <div class="member-image" style="background-image: url('https://placehold.co/300x400/3a1c71/FFFFFF?text=BAEKHYUN')"></div>
                 <div class="member-info">
                     <h3 class="stage-name">BAEKHYUN</h3>
@@ -241,7 +249,7 @@
             </div>
             
             <!-- Member 3: CHANYEOL -->
-            <div class="member-card">
+            <div class="member-card" data-groups='["exo-k"]'>
                 <div class="member-image" style="background-image: url('https://placehold.co/300x400/4a2c7d/FFFFFF?text=CHANYEOL')"></div>
                 <div class="member-info">
                     <h3 class="stage-name">CHANYEOL</h3>
@@ -258,7 +266,7 @@
             </div>
             
             <!-- Member 4: D.O. -->
-            <div class="member-card">
+            <div class="member-card" data-groups='["exo-k", "vocal"]'>
                 <div class="member-image" style="background-image: url('https://placehold.co/300x400/5a3c8d/FFFFFF?text=D.O.')"></div>
                 <div class="member-info">
                     <h3 class="stage-name">D.O.</h3>
@@ -274,7 +282,7 @@
             </div>
             
             <!-- Member 5: KAI -->
-            <div class="member-card">
+            <div class="member-card" data-groups='["exo-k", "dance"]'>
                 <div class="member-image" style="background-image: url('https://placehold.co/300x400/6a4c9d/FFFFFF?text=KAI')"></div>
                 <div class="member-info">
                     <h3 class="stage-name">KAI</h3>
@@ -291,7 +299,7 @@
             </div>
             
             <!-- Member 6: SEHUN -->
-            <div class="member-card">
+            <div class="member-card" data-groups='["exo-k", "dance"]'>
                 <div class="member-image" style="background-image: url('https://placehold.co/300x400/7a5cad/FFFFFF?text=SEHUN')"></div>
                 <div class="member-info">
                     <h3 class="stage-name">SEHUN</h3>
@@ -308,7 +316,7 @@
             </div>
             
             <!-- Member 7: XIUMIN -->
-            <div class="member-card">
+            <div class="member-card" data-groups='["exo-m", "vocal"]'>
                 <div class="member-image" style="background-image: url('https://placehold.co/300x400/8a6cbd/FFFFFF?text=XIUMIN')"></div>
                 <div class="member-info">
                     <h3 class="stage-name">XIUMIN</h3>
@@ -325,7 +333,7 @@
             </div>
             
             <!-- Member 8: LAY -->
-            <div class="member-card">
+            <div class="member-card" data-groups='["exo-m", "dance"]'>
                 <div class="member-image" style="background-image: url('https://placehold.co/300x400/9a7ccd/FFFFFF?text=LAY')"></div>
                 <div class="member-info">
                     <h3 class="stage-name">LAY</h3>
@@ -342,7 +350,7 @@
             </div>
             
             <!-- Member 9: CHEN -->
-            <div class="member-card">
+            <div class="member-card" data-groups='["exo-m", "vocal"]'>
                 <div class="member-image" style="background-image: url('https://placehold.co/300x400/aa8cdd/FFFFFF?text=CHEN')"></div>
                 <div class="member-info">
                     <h3 class="stage-name">CHEN</h3>
@@ -364,21 +372,60 @@
     </div>
 
     <script>
-        // Simple tab functionality
         document.addEventListener('DOMContentLoaded', function() {
             const tabs = document.querySelectorAll('.tab');
+            const memberCards = document.querySelectorAll('.member-card');
+            const membersGrid = document.querySelector('.members-grid');
             
+            // Create a no results message element
+            const noResults = document.createElement('div');
+            noResults.className = 'no-results';
+            noResults.textContent = 'No members found in this category';
+            noResults.style.display = 'none';
+            membersGrid.appendChild(noResults);
+            
+            // Filter function
+            function filterMembers(filter) {
+                let hasResults = false;
+                
+                memberCards.forEach(card => {
+                    const groups = card.getAttribute('data-groups');
+                    
+                    if (filter === 'all' || groups.includes(filter)) {
+                        card.style.display = 'block';
+                        hasResults = true;
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+                
+                // Show or hide the no results message
+                noResults.style.display = hasResults ? 'none' : 'block';
+            }
+            
+            // Tab click event
             tabs.forEach(tab => {
                 tab.addEventListener('click', function() {
                     tabs.forEach(t => t.classList.remove('active'));
                     this.classList.add('active');
                     
-                    // In a real application, this would filter the members
-                    // For this example, we'll just show a message
-                    const unitName = this.textContent;
-                    alert(`Showing ${unitName} members!`);
+                    const filter = this.getAttribute('data-filter');
+                    filterMembers(filter);
                 });
             });
+            
+            // Social link click event
+            document.querySelectorAll('.social-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const platform = this.querySelector('i').className.split('-')[1];
+                    const member = this.closest('.member-card').querySelector('.stage-name').textContent;
+                    alert(`Follow ${member} on ${platform.charAt(0).toUpperCase() + platform.slice(1)}!`);
+                });
+            });
+            
+            // Initialize with all members shown
+            filterMembers('all');
         });
     </script>
 </body>
